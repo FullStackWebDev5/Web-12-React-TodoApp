@@ -1,49 +1,61 @@
 import { useState } from "react";
 import styles from "./Todo.module.css";
+import AddTodo from "./AddTodo";
+import TodoList from "./TodoList";
 
 const Todo = () => {
-  const [todos, setTodos] = useState([
-    {
-			id: 1,
-      text: "Revise Advance JS",
-      completed: false,
-    },
-    {
-			id: 2,
-      text: "Revise React Basics",
-      completed: true,
-    },
-    {
-			id: 3,
-      text: "Revise HTML",
-      completed: true,
-    },
-  ]);
+  const [todoCount, setTodoCount] = useState(0);
+  const [todos, setTodos] = useState([]);
+  const [todoInput, setTodoInput] = useState("");
+
+  const addTodo = () => {
+    setTodos([
+      ...todos,
+      {
+        id: todoCount + 1,
+        text: todoInput,
+        completed: false,
+      },
+    ]);
+    setTodoCount(todoCount + 1);
+    setTodoInput("");
+  };
+
+  const markCompleted = (todoId) => {
+    setTodos(
+      todos.map((todo) => {
+        if (todo.id === todoId) {
+          todo.completed = true;
+        }
+        return todo;
+      })
+    );
+  };
+
+  const deleteTodo = (todoId) => {
+    setTodos(todos.filter((todo) => todo.id !== todoId));
+  };
 
   return (
     <div className={styles.mainContainer}>
-      <input className={styles.addTodoInput} type="text" placeholder="Add todo item ..." />
-      <button className={styles.addTodoButton}>Add todo</button>
-      <div className={styles.todoListContainer}>
-        <ul>
-          {todos.map(todo => (
-            <li key={todo.id}>
-              <span
-                style={{
-                  textDecoration: todo.completed ? "line-through" : "none",
-                }}
-              >
-                {todo.text}{" "}
-              </span>
-              <span>
-                <button>✅</button> <button>❌</button>
-              </span>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <AddTodo
+        todoInput={todoInput}
+        setTodoInput={setTodoInput}
+        addTodo={addTodo}
+      />
+      <TodoList
+        todos={todos}
+        markCompleted={markCompleted}
+        deleteTodo={deleteTodo}
+      />
     </div>
   );
 };
 
 export default Todo;
+
+/*
+	When state is Array/Object:
+	- Don't use push, instead use ... (spread operator)
+	- Use methods like map, filter, etc which return a new array
+*/

@@ -1,7 +1,9 @@
 .mainContainer {
-	padding: 10px;
+	padding: 20px;
 	width: max-content;
 	margin: 10px auto;
+	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+	border-radius: 5px;
 }
 
 .todoListContainer ul {
@@ -25,4 +27,16 @@
 	color: white;
 	height: 30px;
 	margin-left: -5px;
+}
+
+.todoActionButtons button {
+	border: none;
+	padding: 0;
+	font-size: 1.2em;
+	margin-left: 5px;
+	background: none;
+}
+
+.todoActionButtons button:hover, .addTodoButton:hover {
+	cursor: pointer;
 }
